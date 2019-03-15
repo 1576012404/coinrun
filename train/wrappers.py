@@ -12,14 +12,14 @@ class Goal:
         self.past_goals = []
         self.debug = False
         self.xrange=20
-        self.yrange=[[0,9],[9,15]]
+        self.yrange=[[0,9],[9,15],[15,20],[20,25],[25,30],[30,34]]
         self.m_Mode=0
     
     # 设置目标点
     def set_goal(self, p):
         while True:
             # dp=np.random.uniform(-self.xrange,self.xrange,2)
-            goal_x=np.random.randint(0,63)
+            goal_x=np.random.randint(1,63)
             goal_y=np.random.randint(self.yrange[self.m_Mode][0],self.yrange[self.m_Mode][1])
 
             g=np.array([goal_x,goal_y])
@@ -27,7 +27,11 @@ class Goal:
             if self.is_valid_goal(g):
                 break
         self.current_goal=g
-        self.m_Mode=self.m_Mode^1
+        self.m_Mode=(self.m_Mode+1)%6
+
+
+        # self.m_Mode=self.m_Mode^1
+
         # self.current_goal = np.array([50,15])
     
     # 是否到达目标
