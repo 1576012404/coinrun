@@ -165,7 +165,7 @@ class CoinRunVecEnv(VecEnv):
         else:
             self.buf_render_rgb = np.zeros([1, 1, 1, 1], dtype=np.uint8)
 
-        num_channels = 2 if Config.USE_BLACK_WHITE else 3
+        num_channels = 1 if Config.USE_BLACK_WHITE else 3
         obs_space = gym.spaces.Box(0, 255, shape=[self.RES_H, self.RES_W, num_channels], dtype=np.uint8)
 
         super().__init__(
