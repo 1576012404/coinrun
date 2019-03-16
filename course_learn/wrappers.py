@@ -87,7 +87,7 @@ class Goal:
         if self.current_goal is None:
             self.set_goal(p)
 
-        if self.reach_goal(self.p):
+        elif self.reach_goal(self.p):
             reward = 1
             if self.m_Mode==0:
                 done = True
@@ -132,6 +132,8 @@ class CourierWrapper(VecEnvWrapper):
         pos_channel = np.zeros([self.num_envs, 64, 64, 1])
         walls, ax, ay = self.venv.vec_map_info()
         for i in range(self.num_envs):
+            if dones[i]:
+                self.gms[i].reset()
             p = np.array([ax[i], ay[i]])
             rews[i], bGetGoal = self.gms[i].step(p, walls[i])
             if bGetGoal:
@@ -148,8 +150,7 @@ class CourierWrapper(VecEnvWrapper):
             # pos_channel[i,agent_pos[0],agent_pos[1],0]=-1
             # pos_channel[i, goal_pos[0], goal_pos[1], 0] = 1
 
-            if dones[i]:
-                self.gms[i].reset()
+
         if goaldone.any():
             self.venv.vec_reset(goaldone)
 
