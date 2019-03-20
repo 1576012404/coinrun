@@ -122,7 +122,8 @@ class CourierWrapper(VecEnvWrapper):
         self.m_Render = render
 
     def reset(self):
-        obs = self.venv.reset()
+
+        obs, _, _, _ = self.step_wait()
         return obs
 
     def step_wait(self):
